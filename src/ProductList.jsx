@@ -1,0 +1,10 @@
+import React from 'react';import{useDispatch,useSelector}from'react-redux';import{addItem}from'./CartSlice.jsx';
+export const plants=[
+{id:1,name:'Snake Plant',price:15,category:'Air Purifying Plants',image:'https://images.unsplash.com/photo-1593482892290-f54927ae1bb9?w=600',description:'Hardy air-purifying foliage.'},
+{id:2,name:'Spider Plant',price:12,category:'Air Purifying Plants',image:'https://images.unsplash.com/photo-1572688484438-313a6e50c333?w=600',description:'Easy-care hanging greenery.'},
+{id:3,name:'Peace Lily',price:18,category:'Air Purifying Plants',image:'https://images.unsplash.com/photo-1593691509543-c55fb32e5cee?w=600',description:'Elegant white blooms.'},
+{id:4,name:'Aloe Vera',price:14,category:'Medicinal Plants',image:'https://images.unsplash.com/photo-1509423350716-97f9360b4e09?w=600',description:'A soothing succulent favorite.'},
+{id:5,name:'Lavender',price:16,category:'Aromatic Plants',image:'https://images.unsplash.com/photo-1499002238440-d264edd596ec?w=600',description:'Beautiful fragrant flowers.'},
+{id:6,name:'Rosemary',price:13,category:'Aromatic Plants',image:'https://images.unsplash.com/photo-1515586000433-45406d8e6662?w=600',description:'Fresh herbal fragrance.'}
+];
+export default function ProductList(){const dispatch=useDispatch();const cart=useSelector(s=>s.cart);return <main className="container"><h1>Our Plants</h1>{[...new Set(plants.map(p=>p.category))].map(category=><section key={category}><h2>{category}</h2><div className="grid">{plants.filter(p=>p.category===category).map(plant=><article className="card" key={plant.id}><img src={plant.image} alt={plant.name}/><h3>{plant.name}</h3><p>{plant.description}</p><strong>${plant.price.toFixed(2)}</strong><button disabled={cart.some(i=>i.id===plant.id)} onClick={()=>dispatch(addItem(plant))}>{cart.some(i=>i.id===plant.id)?'Added to Cart':'Add to Cart'}</button></article>)}</div></section>)}</main>}
